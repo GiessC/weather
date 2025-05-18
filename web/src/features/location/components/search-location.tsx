@@ -3,7 +3,7 @@ import { useContext, useState, type ChangeEvent } from "react";
 import { Command, CommandEmpty, CommandItem, CommandGroup, CommandList } from "@/components/ui/command";
 import { useWeatherApi, type LocationOption } from "@/features/weather/api/weather.api";
 import { Input } from '@/components/ui/input';
-import { LocationContext } from '../context/LocationContext';
+import { LocationContext } from '../context/location.context';
 
 export function TypeaheadLocationSearch() {
   const [query, setQuery] = useState<string>("");

@@ -7,7 +7,7 @@ import {
 import {
   Coordinates,
   type Location,
-} from '@/features/location/context/LocationContext';
+} from '@/features/location/context/location.context';
 
 export function useWeatherApi() {
   function useWeatherByLocation({ id, coords }: Location) {

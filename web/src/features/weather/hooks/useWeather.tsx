@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useWeatherApi } from "../api/weather.api";
-import { LocationContext } from "@/features/location/context/LocationContext";
+import { LocationContext } from "@/features/location/context/location.context";
 
 export function useWeather() {
   const { location } = useContext(LocationContext);

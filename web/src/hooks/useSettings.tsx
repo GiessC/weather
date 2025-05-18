@@ -32,8 +32,8 @@ export function useSettings() {
   }
 
   function reset() {
-    localStorage.removeItem("settings");
     setSettings(DEFAULT_SETTINGS);
+    localStorage.removeItem("settings");
   }
 
   return {

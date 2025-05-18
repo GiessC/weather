@@ -1,14 +1,9 @@
 import { SettingsContext } from '@/context/settings.context';
 import { useWeather } from '@/features/weather/hooks/useWeather';
+import { milesToKilometers } from '@/utils/distance';
 import { useContext, useMemo } from 'react';
 
-export interface ILocalizer {
-  temperature: string;
-  error?: Error | null;
-  isLoading: boolean;
-}
-
-export function useLocalizer(): ILocalizer {
+export function useLocalizer() {
   const { weather, error, isLoading } = useWeather();
   const { settings } = useContext(SettingsContext);
 
@@ -24,16 +19,62 @@ export function useLocalizer(): ILocalizer {
     return `${Math.round(celcius)} °C`;
   }, [weather, settings.useFahrenheit]);
 
-  if (!weather) {
-    return {
-      temperature: '',
-      error,
-      isLoading,
-    };
-  }
+  const condition = useMemo(() => {
+    if (!weather) {
+      return;
+    }
+    return weather.condition;
+  }, [weather]);
+
+  const humidity = useMemo(() => {
+    if (!weather) {
+      return '';
+    }
+    return `${weather.humidity} %`;
+  }, [weather]);
+
+  const wind = useMemo(() => {
+    if (!weather) {
+      return '';
+    }
+    if (settings.useMiles) {
+      return `${weather.wind.speedMph} mph ${weather.wind.direction} with gusts up to ${weather.wind.gustMph} mph`;
+    }
+    return `${milesToKilometers(weather.wind.speedMph)} km/h ${weather.wind.direction} with gusts up to ${milesToKilometers(weather.wind.gustMph)} km/h`;
+  }, [settings.useMiles, weather]);
+
+  const cloudCoverage = useMemo(() => {
+    if (!weather) {
+      return '';
+    }
+    return `${weather.cloudCoverage} %`;
+  }, [weather]);
+
+  const uvIndex = useMemo(() => {
+    if (!weather) {
+      return '';
+    }
+    return `${weather.uvIndex}`;
+  }, [weather]);
+
+  const visibility = useMemo(() => {
+    if (!weather) {
+      return '';
+    }
+    if (settings.useMiles) {
+      return `${weather.visibilityMiles} miles`;
+    }
+    return `${milesToKilometers(weather.visibilityMiles)} km`;
+  }, [settings.useMiles, weather]);
 
   return {
     temperature,
+    condition,
+    humidity,
+    wind,
+    cloudCoverage,
+    uvIndex,
+    visibility,
     error,
     isLoading,
   };

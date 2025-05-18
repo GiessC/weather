@@ -1,16 +1,17 @@
 import pDebounce from 'p-debounce';
-import { useState, type ChangeEvent } from "react";
-import { useLocation } from "../hooks/useLocation";
+import { useContext, useState, type ChangeEvent } from "react";
 import { Command, CommandEmpty, CommandItem, CommandGroup, CommandList } from "@/components/ui/command";
-import type { LocationOption } from "@/features/weather/api/weather.api";
+import { useWeatherApi, type LocationOption } from "@/features/weather/api/weather.api";
 import { Input } from '@/components/ui/input';
+import { LocationContext } from '../context/LocationContext';
 
 export function TypeaheadLocationSearch() {
   const [query, setQuery] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [options, setOptions] = useState<LocationOption[]>([]);
-  const { useSearch, location, setLocation } = useLocation();
-  const { mutateAsync: search, isIdle, isPending } = useSearch();
+  const { location, setLocation } = useContext(LocationContext);
+  const { useLocationSearch } = useWeatherApi();
+  const { mutateAsync: search, isIdle, isPending } = useLocationSearch();
   const isLoading = isIdle || isPending;
 
   const debouncedSearch = pDebounce(search, 1_000);

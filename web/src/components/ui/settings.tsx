@@ -1,6 +1,7 @@
 import { Form } from "../form/form";
 import { Button } from "./button";
-import { SettingsContext, settingsSchema } from "@/context/settings.context";
+import { SettingsContext } from "@/context/settings.context";
+import { settingsSchema } from "@/types/settings.entity";
 import { Checkbox } from "./checkbox";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./form";
 import { useContext } from "react";
@@ -13,7 +14,7 @@ export function Settings() {
       {({ control, formState: { errors } }) => (
         <div className="flex flex-col gap-2">
           <h2>Settings</h2>
-          <div className='flex flex-row gap-2 items-center'>
+          <div className='flex flex-col gap-2'>
             <FormField
               control={control}
               name="useFahrenheit"
@@ -32,6 +33,27 @@ export function Settings() {
                     </FormLabel>
                   </div>
                   {errors.useFahrenheit && <FormMessage>{errors.useFahrenheit.message}</FormMessage>}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="useMiles"
+              render={({ field }) => (
+                <FormItem>
+                  <div className='flex flex-row gap-2 items-center'>
+                    <FormControl>
+                      <Checkbox
+                        id='useMiles'
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel className='cursor-pointer' htmlFor='useMiles'>
+                      Use Miles
+                    </FormLabel>
+                  </div>
+                  {errors.useMiles && <FormMessage>{errors.useMiles.message}</FormMessage>}
                 </FormItem>
               )}
             />

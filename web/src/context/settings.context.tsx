@@ -1,16 +1,6 @@
 import { useLocalStorage } from "@/lib/local-storage";
 import { createContext, useCallback, useMemo, useState, type PropsWithChildren } from "react";
-import { z } from "zod";
-
-export const settingsSchema = z.object({
-  useFahrenheit: z.boolean().default(false),
-});
-
-export type Settings = z.infer<typeof settingsSchema>;
-
-const DEFAULT_SETTINGS: Settings = {
-  useFahrenheit: false,
-};
+import { DEFAULT_SETTINGS, type Settings } from "../types/settings.entity";
 
 export const SettingsContext = createContext<{
   settings: Settings;

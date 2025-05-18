@@ -1,6 +1,6 @@
+import { SettingsContext } from '@/context/settings.context';
 import { useWeather } from '@/features/weather/hooks/useWeather';
-import { useSettings } from '@/hooks/useSettings';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 
 export interface ILocalizer {
   temperature: string;
@@ -10,7 +10,7 @@ export interface ILocalizer {
 
 export function useLocalizer(): ILocalizer {
   const { weather, error, isLoading } = useWeather();
-  const { settings } = useSettings();
+  const { settings } = useContext(SettingsContext);
 
   const temperature = useMemo(() => {
     if (!weather) {

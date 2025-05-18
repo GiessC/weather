@@ -1,4 +1,5 @@
-import { LocationProvider } from "@/features/location/context/LocationContext";
+import { SettingsProvider } from "@/context/settings.context";
+import { LocationProvider } from "@/features/location/context/location.context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
 
@@ -8,7 +9,9 @@ export function Provider({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider client={queryClient}>
       <LocationProvider>
-        {children}
+        <SettingsProvider>
+          {children}
+        </SettingsProvider>
       </LocationProvider>
     </QueryClientProvider>
   )

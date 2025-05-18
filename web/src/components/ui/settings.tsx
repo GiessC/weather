@@ -1,11 +1,12 @@
 import { Form } from "../form/form";
 import { Button } from "./button";
-import { settingsSchema, useSettings } from "@/hooks/useSettings";
+import { SettingsContext, settingsSchema } from "@/context/settings.context";
 import { Checkbox } from "./checkbox";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./form";
+import { useContext } from "react";
 
 export function Settings() {
-  const { settings, save } = useSettings();
+  const { settings, save } = useContext(SettingsContext);
 
   return (
     <Form defaultValues={settings} onSubmit={save} schema={settingsSchema}>

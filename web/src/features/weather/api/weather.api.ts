@@ -4,10 +4,7 @@ import {
   CurrentWeather,
   type CurrentWeatherJson,
 } from '../types/current-weather';
-import type {
-  Coordinates,
-  Location,
-} from '@/features/location/hooks/useLocation';
+import type { Location } from '@/features/location/hooks/useLocation';
 
 export function useWeatherApi() {
   function useWeatherByLocation({ id, coords }: Location) {

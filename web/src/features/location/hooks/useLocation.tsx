@@ -1,6 +1,15 @@
+import { useWeatherApi, type LocationOption } from "@/features/weather/api/weather.api";
 import { useState } from "react";
+import { z } from "zod";
+
+export const searchSchema = z.object({
+  query: z.string().min(1, { message: "Please enter a location" }),
+});
+
+export type SearchRequest = z.infer<typeof searchSchema>;
 
 export function useLocation() {
+  const { useLocationSearch: useSearch } = useWeatherApi();
   const [location, setLocation] = useState<Location>({
     id: undefined,
     coords: Coordinates.default()
@@ -8,6 +17,7 @@ export function useLocation() {
 
   return {
     location,
+    useSearch,
     setLocation,
   }
 }

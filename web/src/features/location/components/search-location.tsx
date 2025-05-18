@@ -1,41 +1,71 @@
-import { Form } from "@/components/form/form";
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { z } from "zod";
+import pDebounce from 'p-debounce';
+import { useState, type ChangeEvent } from "react";
+import { useLocation } from "../hooks/useLocation";
+import { Command, CommandEmpty, CommandItem, CommandGroup, CommandList } from "@/components/ui/command";
+import type { LocationOption } from "@/features/weather/api/weather.api";
+import { Input } from '@/components/ui/input';
 
-const searchSchema = z.object({
-  query: z.string().min(1, { message: "Please enter a location" }),
-})
+export function TypeaheadLocationSearch() {
+  const [query, setQuery] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [options, setOptions] = useState<LocationOption[]>([]);
+  const { useSearch, location, setLocation } = useLocation();
+  const { mutateAsync: search, isIdle, isPending } = useSearch();
+  const isLoading = isIdle || isPending;
 
-export function SearchLocation() {
-  function search() {}
+  const debouncedSearch = pDebounce(search, 1_000);
+
+  async function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    setQuery(value);
+    if (value.length < 3) {
+      setIsOpen(false);
+      return;
+    }
+    setOptions(await debouncedSearch(value));
+    setIsOpen(true);
+  }
 
   return (
-    <Form
-      schema={searchSchema}
-      onSubmit={search}
-      defaultValues={{
-        query: '',
-      }}
-    >
-      {({ control }) => (
-        <FormField
-          control={control}
-          name='query'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Search Location
-              </FormLabel>
-              <FormControl>
-                <div role='search'>
-                  <Input {...field} type='text' placeholder='Ex. San Francisco, CA' className='w-full' />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
+    <div role='search'>
+      <Command>
+        <Input
+          value={query}
+          onChange={handleChange}
+          onFocus={() => setIsOpen(true)}
+          aria-label='Search for a location by name'
+          placeholder="Search for a location (Ex. San Francisco, CA)"
         />
-      )}
-    </Form>
-  )
+        {isOpen && (
+          <CommandList>
+            {!isLoading && (
+              <CommandEmpty>
+                No locations found.
+              </CommandEmpty>
+            )}
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={option.id}
+                  value={option.id}
+                  onSelect={() => {
+                    setQuery(option.name);
+                    setLocation({
+                      id: option.id,
+                      coords: option.coords,
+                    });
+                    setIsOpen(false);
+                  }}
+                  aria-selected={location?.id === option.id ? "true" : "false"}
+                  className="cursor-pointer"
+                >
+                  {option.fullName}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        )}
+      </Command>
+    </div>
+  );
 }

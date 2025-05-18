@@ -142,6 +142,18 @@ class Wind {
     this._direction = direction;
     this._gustMph = gustMph;
   }
+
+  get speedMph(): number {
+    return this._speedMph;
+  }
+
+  get direction(): string {
+    return this._direction;
+  }
+
+  get gustMph(): number {
+    return this._gustMph;
+  }
 }
 
 class Temperature {

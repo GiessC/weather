@@ -5,12 +5,12 @@ import {
   type CurrentWeatherJson,
 } from '../types/current-weather';
 import {
-  Coordinates,
-  type Location,
+  LocationOption,
+  type LocationOptionJson,
 } from '@/features/location/context/location.context';
 
 export function useWeatherApi() {
-  function useWeatherByLocation({ id, coords }: Location) {
+  function useWeatherByLocation({ id, coords }: LocationOption) {
     return useQuery({
       queryKey: ['weather', id, coords?.latitude, coords?.longitude],
       queryFn: async (): Promise<CurrentWeather> => {
@@ -44,50 +44,4 @@ export function useWeatherApi() {
     useLocationSearch,
   };
 }
-
-export interface LocationOptionJson {
-  id: string;
-  name: string;
-  country: string;
-  region: string;
-  lat: number;
-  lon: number;
-}
-
-export class LocationOption {
-  readonly id: string;
-  readonly name: string;
-  readonly country: string;
-  readonly region: string;
-  readonly coords: Coordinates;
-
-  constructor(
-    id: string,
-    name: string,
-    country: string,
-    region: string,
-    coords: Coordinates
-  ) {
-    this.id = id;
-    this.name = name;
-    this.country = country;
-    this.region = region;
-    this.coords = coords;
-  }
-
-  static fromJson(json: LocationOptionJson): LocationOption {
-    return new LocationOption(
-      json.id,
-      json.name.trim(),
-      json.country.trim(),
-      json.region.trim(),
-      new Coordinates(json.lat, json.lon)
-    );
-  }
-
-  get fullName(): string {
-    return `${this.name}, ${this.region ? `${this.region},` : ''} ${
-      this.country
-    }`;
-  }
-}
+export { LocationOption };

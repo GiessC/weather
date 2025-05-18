@@ -1,8 +1,11 @@
 export function useLocalStorage() {
-  function getItem<T>(key: string): T | null {
+  function getItem<T>(
+    key: string,
+    map: (value: Partial<T>) => T = (value) => value as T
+  ): T | null {
     const item = localStorage.getItem(key);
     if (item) {
-      return JSON.parse(item);
+      return map(JSON.parse(item));
     }
     return null;
   }

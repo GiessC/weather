@@ -1,3 +1,4 @@
+import { useLocalStorage } from "@/lib/local-storage";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -13,14 +14,14 @@ const DEFAULT_SETTINGS: Settings = {
 
 export function useSettings() {
   const [settings, setSettings] = useState<Settings>(load());
+  const { getItem, setItem, removeItem } = useLocalStorage();
 
   function load(): Settings {
-    const settings = localStorage.getItem("settings");
+    const settings = getItem<Settings>("settings");
     if (settings) {
-      const userSettings = JSON.parse(settings);
       return {
         ...DEFAULT_SETTINGS,
-        ...userSettings,
+        ...settings,
       }
     }
     return DEFAULT_SETTINGS;
@@ -28,12 +29,12 @@ export function useSettings() {
 
   function save(newSettings: Settings) {
     setSettings(newSettings);
-    localStorage.setItem("settings", JSON.stringify(newSettings));
+    setItem("settings", JSON.stringify(newSettings));
   }
 
   function reset() {
     setSettings(DEFAULT_SETTINGS);
-    localStorage.removeItem("settings");
+    removeItem("settings");
   }
 
   return {

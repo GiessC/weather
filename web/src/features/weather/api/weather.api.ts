@@ -32,7 +32,6 @@ export function useWeatherApi() {
         const endpoint = apiUrl('/search.json');
         endpoint.searchParams.append('q', query!);
         const response = await api.get<LocationOptionJson[]>(endpoint);
-        console.log('response', response);
         return response.map((json: LocationOptionJson): LocationOption => {
           return LocationOption.fromJson(json);
         });

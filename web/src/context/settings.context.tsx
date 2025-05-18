@@ -27,7 +27,6 @@ export function SettingsProvider({ children }: PropsWithChildren) {
 
   const load = (): Settings => {
     const settings = getItem<Settings>("settings");
-    console.log("settings", settings);
     if (settings) {
       return {
         ...DEFAULT_SETTINGS,
@@ -41,7 +40,7 @@ export function SettingsProvider({ children }: PropsWithChildren) {
 
   const save = useCallback((newSettings: Settings) => {
     setSettings(newSettings);
-    setItem("settings", JSON.stringify(newSettings));
+    setItem("settings", newSettings);
   }, [setItem]);
 
   const reset = useCallback(() => {

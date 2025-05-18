@@ -1,3 +1,4 @@
+import { useLocalStorage } from "@/lib/local-storage";
 import { createContext, useMemo, useState, type PropsWithChildren } from "react";
 
 export class Coordinates {
@@ -28,8 +29,10 @@ export interface ILocationContext {
 }
 
 export function LocationProvider({ children }: PropsWithChildren) {
-  const [location, setLocation] = useState<Location>({
+  const { getItem, setItem } = useLocalStorage();
+  const [location, setLocation] = useState<Location>(getItem<Location>("location") ?? {
     id: undefined,
+    name: undefined,
     coords: Coordinates.default(),
   });
 
@@ -37,8 +40,9 @@ export function LocationProvider({ children }: PropsWithChildren) {
     location,
     setLocation: (location: Location) => {
       setLocation(location);
+      setItem("location", location);
     },
-  }), [location]);
+  }), [location, setItem]);
 
   return (
     <LocationContext.Provider value={contextValue}>
@@ -54,6 +58,7 @@ export const searchSchema = z.object({
 
 export type SearchRequest = z.infer<typeof searchSchema>;
 export interface Location {
+  name?: string;
   id?: string;
   coords?: Coordinates;
 }

@@ -14,13 +14,17 @@ export function useWeatherApi() {
     return useQuery({
       queryKey: ['weather', id, coords?.latitude, coords?.longitude],
       queryFn: async (): Promise<CurrentWeather> => {
-        const endpoint = apiUrl('/current.json');
-        endpoint.searchParams.append(
-          'q',
-          id ? `id:${id}` : `${coords?.latitude},${coords?.longitude}`
-        );
-        const json = await api.get<CurrentWeatherJson>(endpoint);
-        return CurrentWeather.fromJson(json);
+        return new Promise((resolve) => {
+          setTimeout(async () => {
+            const endpoint = apiUrl('/current.json');
+            endpoint.searchParams.append(
+              'q',
+              id ? `id:${id}` : `${coords?.latitude},${coords?.longitude}`
+            );
+            const json = await api.get<CurrentWeatherJson>(endpoint);
+            resolve(CurrentWeather.fromJson(json));
+          }, 5_000);
+        });
       },
     });
   }

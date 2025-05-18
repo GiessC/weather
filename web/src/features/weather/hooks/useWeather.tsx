@@ -5,10 +5,7 @@ import { LocationContext } from "@/features/location/context/location.context";
 export function useWeather() {
   const { location } = useContext(LocationContext);
   const { useWeatherByLocation } = useWeatherApi();
-  const { data: weather, error, isLoading } = useWeatherByLocation({
-    id: location.id,
-    coords: location.coords,
-  });
+  const { data: weather, error, isLoading } = useWeatherByLocation(location);
 
   return {
     weather,

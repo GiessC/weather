@@ -5,11 +5,11 @@ import { Footer } from "@/layout/footer";
 
 export function App() {
   return (
-    <>
+    <div className='flex flex-col items-center justify-center mt-8'>
       <TypeaheadLocationSearch />
       <Weather />
       <Settings />
       <Footer />
-    </>
+    </div>
   );
 }

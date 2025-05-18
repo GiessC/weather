@@ -1,38 +1,21 @@
-import { useLocalizer } from "@/features/localization/hooks/useLocalizer";
+import { Visibility } from "./visibility";
+import { UvIndex } from "./uv-index";
+import { Wind } from "./wind";
+import { CloudCoverage } from "./cloud-coverage";
+import { Humidity } from "./humidity";
+import { Temperature } from "./temperature";
+import { Condition } from "./condition";
 
 export function Weather() {
-  const {
-    temperature,
-    condition,
-    cloudCoverage,
-    humidity,
-    uvIndex,
-    visibility,
-    wind,
-    error,
-    isLoading
-  } = useLocalizer();
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      <p>{temperature}</p>
-      <div className='flex items-center'>
-        <img src={condition?.icon} alt={condition?.text} />
-        <p>{condition?.text}</p>
-      </div>
-      <p>{humidity}</p>
-      <p>{wind}</p>
-      <p>{cloudCoverage}</p>
-      <p>{uvIndex}</p>
-      <p>{visibility}</p>
+    <div className='flex flex-col gap-2 items-center'>
+      <Condition />
+      <Temperature />
+      <Humidity />
+      <Wind />
+      <CloudCoverage />
+      <UvIndex />
+      <Visibility />
     </div>
   );
 }

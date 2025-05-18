@@ -1,5 +1,6 @@
 import { Settings } from "@/components/ui/settings";
 import { useLocalizer } from "@/features/localization/hooks/useLocalizer";
+import { SearchLocation } from "@/features/location/components/search-location";
 import { Footer } from "@/layout/footer";
 
 export function App() {
@@ -11,7 +12,7 @@ export function App() {
 
   return (
     <>
-      <h1>Weather App</h1>
+      <SearchLocation />
       <div>
         {temperature}
       </div>

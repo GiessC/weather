@@ -13,7 +13,7 @@ export function Footer() {
   const { weather, isLoading } = useWeather();
 
   return (
-    <footer className='w-full absolute mt-8 bottom-4 items-center'>
+    <footer className='w-full mt-8 items-center'>
       <p className="text-sm text-muted-foreground text-center">
         {isLoading ? <Skeleton className='m-auto w-[300px] h-[25px]' /> : <>Last updated at {formatWithTime(weather?.lastUpdated)}</>}
       </p>

@@ -1,5 +1,5 @@
 import pDebounce from 'p-debounce';
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useContext, useState, type ChangeEvent } from "react";
 import { Command, CommandItem, CommandGroup, CommandList, CommandDialog } from "@/components/ui/command";
 import { LocationOption, useWeatherApi } from "@/features/weather/api/weather.api";
 import { Coordinates, LocationContext } from '../context/location.context';

@@ -1,9 +1,9 @@
-import { Form } from "../form/form";
-import { Button } from "./button";
-import { SettingsContext } from "@/context/settings.context";
-import { settingsSchema } from "@/types/settings.entity";
-import { Checkbox } from "./checkbox";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./form";
+import { Form } from "../../../components/form/form";
+import { Button } from "../../../components/ui/button";
+import { SettingsContext } from "@/features/settings/context/settings.context";
+import { settingsSchema } from "@/features/settings/types/settings.entity";
+import { Checkbox } from "../../../components/ui/checkbox";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../components/ui/form";
 import { useContext } from "react";
 
 export function Settings() {

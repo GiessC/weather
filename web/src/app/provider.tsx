@@ -1,4 +1,4 @@
-import { SettingsProvider } from "@/context/settings.context";
+import { SettingsProvider } from "@/features/settings/context/settings.context";
 import { LocationProvider } from "@/features/location/context/location.context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";

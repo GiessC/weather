@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useWeather } from "../hooks/useWeather";
 import { useContext, useMemo } from "react";
-import { SettingsContext } from "@/context/settings.context";
+import { SettingsContext } from "@/features/settings/context/settings.context";
 import { useLocalizer } from "@/features/localization/hooks/useLocalizer";
 
 export function Temperature() {

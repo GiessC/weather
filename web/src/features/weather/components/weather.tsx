@@ -8,7 +8,7 @@ import { Condition } from "./condition";
 
 export function Weather() {
   return (
-    <div className='flex flex-col gap-2 items-center'>
+    <div className='flex flex-col gap-2 items-center px-6'>
       <Condition />
       <Temperature />
       <Humidity />

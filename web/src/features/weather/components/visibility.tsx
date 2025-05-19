@@ -2,7 +2,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useLocalizer } from "@/features/localization/hooks/useLocalizer";
 import { useWeather } from "../hooks/useWeather";
 import { useContext, useMemo } from "react";
-import { SettingsContext } from "@/context/settings.context";
+import { SettingsContext } from "@/features/settings/context/settings.context";
+import { round } from "@/utils/number";
 
 export function Visibility() {
   const { weather, isLoading } = useWeather();
@@ -14,9 +15,9 @@ export function Visibility() {
       return '';
     }
     if (settings.useMiles) {
-      return `${Math.round(weather.visibilityMiles)} miles`;
+      return `${round(weather.visibilityMiles)} miles`;
     }
-    return `${milesToKilometers(weather.visibilityMiles)} km`;
+    return `${round(milesToKilometers(weather.visibilityMiles))} km`;
   }, [milesToKilometers, settings.useMiles, weather]);
 
   return (
